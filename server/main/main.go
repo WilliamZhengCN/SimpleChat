@@ -32,6 +32,10 @@ func main() {
 	}
 }
 
+func initSystem() {
+
+}
+
 func initUserDao() {
 	model.MyUserDao = model.NewUserDao(pool)
 }

@@ -19,15 +19,11 @@ func ShowMenu() {
 	fmt.Println("Please select 1--4")
 	var key int
 	fmt.Scanln(&key)
-	smsProcess := &SmsProcess{}
 	switch key {
 	case 1:
 		showOnlineUser()
 	case 2:
-		fmt.Println("Type the message you wanted to send: ")
-		inputReader := bufio.NewReader(os.Stdin)
-		input, _ := inputReader.ReadString('\n')
-		smsProcess.SendGroupMes(input)
+		handleSendGroupMessage()
 	case 3:
 		fmt.Println("message list")
 	case 4:
@@ -36,6 +32,14 @@ func ShowMenu() {
 	default:
 		fmt.Printf("Error command")
 	}
+}
+
+func handleSendGroupMessage() {
+	smsProcess := &SmsProcess{}
+	fmt.Println("Type the message you wanted to send: ")
+	inputReader := bufio.NewReader(os.Stdin)
+	input, _ := inputReader.ReadString('\n')
+	smsProcess.SendGroupMes(input)
 }
 
 func serverProcessMes(conn net.Conn) {
