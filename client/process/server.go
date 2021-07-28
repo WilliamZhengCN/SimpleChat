@@ -1,8 +1,9 @@
 package process
 
 import (
-	"FirstProject/SimpleChat/client/utils"
-	"FirstProject/SimpleChat/common/message"
+	"SimpleChat/client/utils"
+	"SimpleChat/common/message"
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -23,10 +24,10 @@ func ShowMenu() {
 	case 1:
 		showOnlineUser()
 	case 2:
-		fmt.Println("send message")
-		var content string
-		fmt.Scanln(&content)
-		smsProcess.SendGroupMes(content)
+		fmt.Println("Type the message you wanted to send: ")
+		inputReader := bufio.NewReader(os.Stdin)
+		input, _ := inputReader.ReadString('\n')
+		smsProcess.SendGroupMes(input)
 	case 3:
 		fmt.Println("message list")
 	case 4:
@@ -41,8 +42,8 @@ func serverProcessMes(conn net.Conn) {
 	ts := utils.Transfer{
 		Conn: conn,
 	}
+	fmt.Println("client is waitting for the message from server")
 	for {
-		fmt.Println("client is waitting for the message from server")
 		mes, err := ts.ReadPkg()
 		if err != nil {
 			fmt.Println("Fail to read message from server. Error : ", err)

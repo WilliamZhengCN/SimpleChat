@@ -1,7 +1,7 @@
 package model
 
 import (
-	"FirstProject/SimpleChat/common/message"
+	"SimpleChat/common/message"
 	"encoding/json"
 	"fmt"
 

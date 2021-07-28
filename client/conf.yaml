@@ -1,0 +1,3 @@
+serverhost: localhost
+serverport: 8765
+connecttype: tcp

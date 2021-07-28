@@ -1,7 +1,7 @@
 package utils
 
 import (
-	message "FirstProject/SimpleChat/common/message"
+	message "SimpleChat/common/message"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"

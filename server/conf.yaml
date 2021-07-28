@@ -1,0 +1,5 @@
+serverhost: 0.0.0.0
+serverport: 8765
+listentype: tcp
+redishost: localhost
+redisport: 6379

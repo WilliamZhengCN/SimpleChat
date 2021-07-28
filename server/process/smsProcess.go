@@ -1,8 +1,8 @@
 package process
 
 import (
-	"FirstProject/SimpleChat/common/message"
-	"FirstProject/SimpleChat/server/utils"
+	"SimpleChat/common/message"
+	"SimpleChat/server/utils"
 	"encoding/json"
 	"fmt"
 	"net"

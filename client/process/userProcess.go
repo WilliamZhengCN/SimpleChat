@@ -1,10 +1,8 @@
 package process
 
 import (
-	"FirstProject/SimpleChat/client/model"
-	"FirstProject/SimpleChat/client/utils"
-	message "FirstProject/SimpleChat/common/message"
-	"encoding/binary"
+	"SimpleChat/client/utils"
+	message "SimpleChat/common/message"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -14,8 +12,11 @@ import (
 type UserProcess struct {
 }
 
-func (this *UserProcess) LoginIn(user model.ChatUser) (err error) {
-	conn, err := net.Dial("tcp", "localhost:8765")
+func (this *UserProcess) LoginIn(user message.User) (err error) {
+	confhelper := utils.ConfigureHelper{}
+	conf := confhelper.GetConf()
+	conn, err := net.Dial(conf.ConnectType, conf.ServerHost+":"+conf.ServerPort)
+	fmt.Println(conf)
 	if err != nil {
 		fmt.Println("Fail to connect to server. Err: ", err, conn)
 		return
@@ -41,24 +42,14 @@ func (this *UserProcess) LoginIn(user model.ChatUser) (err error) {
 		return
 	}
 
-	pkgLen := uint32(len(realData))
-	var bytes [4]byte
-	binary.BigEndian.PutUint32(bytes[0:4], pkgLen)
-	count, err := conn.Write(bytes[:4])
-	if count != 4 || err != nil {
-		fmt.Println("Fail to Write. Err= ", err)
-		return err
-	}
-
-	fmt.Printf("length of message is %d \n content is %s \n", len(realData), realData)
-	_, err = conn.Write(realData)
-	if err != nil {
-		fmt.Println("send message error. error = ", err)
-	}
-
 	transfer := utils.Transfer{
 		Conn: conn,
 	}
+	err = transfer.WritePkg(realData)
+	if err != nil {
+		fmt.Println("fail to register. Error: ", err)
+	}
+
 	mes, err := transfer.ReadPkg()
 	if err != nil {
 		return err
@@ -92,7 +83,10 @@ func (this *UserProcess) LoginIn(user model.ChatUser) (err error) {
 }
 
 func (this *UserProcess) Register(id string, password string, userName string) (err error) {
-	conn, err := net.Dial("tcp", "localhost:8765")
+	confhelper := utils.ConfigureHelper{}
+	conf := confhelper.GetConf()
+	conn, err := net.Dial(conf.ConnectType, conf.ServerHost+":"+conf.ServerPort)
+
 	if err != nil {
 		fmt.Println("Fail to connect to server. Err: ", err, conn)
 		return

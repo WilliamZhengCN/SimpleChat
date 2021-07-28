@@ -1,9 +1,9 @@
 package main
 
 import (
-	message "FirstProject/SimpleChat/common/message"
-	"FirstProject/SimpleChat/server/process"
-	"FirstProject/SimpleChat/server/utils"
+	message "SimpleChat/common/message"
+	"SimpleChat/server/process"
+	"SimpleChat/server/utils"
 	"fmt"
 	"io"
 	"net"

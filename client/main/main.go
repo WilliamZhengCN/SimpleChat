@@ -1,8 +1,8 @@
 package main
 
 import (
-	"FirstProject/SimpleChat/client/model"
-	"FirstProject/SimpleChat/client/process"
+	"SimpleChat/client/process"
+	"SimpleChat/common/message"
 	"fmt"
 )
 
@@ -26,17 +26,7 @@ func ShowMainMenu() {
 		case 1:
 			HandleLoginIn()
 		case 2:
-			var id string
-			var password string
-			var userName string
-			fmt.Println("input User ID:")
-			fmt.Scanln(&id)
-			fmt.Println("input Password:")
-			fmt.Scanln(&password)
-			fmt.Println("input User Name:")
-			fmt.Scanln(&userName)
-			userProcess := &process.UserProcess{}
-			userProcess.Register(id, password, userName)
+			HandleRegister()
 		case 3:
 		default:
 			fmt.Println("Input Error.")
@@ -51,7 +41,7 @@ func HandleLoginIn() {
 	fmt.Scanln(&id)
 	fmt.Println("Password:")
 	fmt.Scanln(&password)
-	userInfo := model.ChatUser{
+	userInfo := message.User{
 		Id:       id,
 		Password: password,
 	}
@@ -60,4 +50,18 @@ func HandleLoginIn() {
 	if err != nil {
 		fmt.Println("Fail to login int. Error: ", err)
 	}
+}
+
+func HandleRegister() {
+	var id string
+	var password string
+	var userName string
+	fmt.Println("input User ID:")
+	fmt.Scanln(&id)
+	fmt.Println("input Password:")
+	fmt.Scanln(&password)
+	fmt.Println("input User Name:")
+	fmt.Scanln(&userName)
+	userProcess := &process.UserProcess{}
+	userProcess.Register(id, password, userName)
 }
